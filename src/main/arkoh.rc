@@ -6,5 +6,6 @@
 extern mod std;
 extern mod extra;
 extern mod glfw;
+extern mod gl;
 
 pub mod window;
