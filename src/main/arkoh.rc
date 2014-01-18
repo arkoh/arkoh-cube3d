@@ -1,0 +1,8 @@
+#[crate_id = "arkoh#0.1"];
+#[crate_type = "lib"];
+
+#[feature(globs, macro_rules, managed_boxes)];
+
+extern mod std;
+extern mod extra;
+extern mod glfw;
