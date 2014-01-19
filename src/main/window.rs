@@ -1,7 +1,7 @@
 use glfw;
 use gl;
 use event;
-use callback::{KeyCallback, ErrorContext};
+use callback::{KeyCallback, ScrollCallback, CursorPosCallback, MouseButtonCallback, FramebufferSizeCallback, ErrorContext};
 use extra::arc::RWArc;
 
 pub struct Window<'a> {
@@ -28,11 +28,28 @@ impl<'a> Window<'a> {
 
 
             let mut user_window = Window { window: window,  events: RWArc::new(~[]) };
-            
+
+            // Add framebuffer callback
+            let collector = user_window.events.clone();
+            user_window.window.set_framebuffer_size_callback(~FramebufferSizeCallback::new(collector)); 
+           
             // Add keyboard callback
             let collector = user_window.events.clone();
             user_window.window.set_key_callback(~KeyCallback::new(collector));
 
+            // Add mouse botton callback
+            let collector = user_window.events.clone();
+            user_window.window.set_mouse_button_callback(~MouseButtonCallback::new(collector));
+
+            // Add cursor pos callback
+            let collector = user_window.events.clone();
+            user_window.window.set_cursor_pos_callback(~CursorPosCallback::new(collector));
+
+            // Add scroll callback
+            let collector = user_window.events.clone();
+            user_window.window.set_scroll_callback(~ScrollCallback::new(collector));
+
+ 
             user_callback(&mut user_window);
         }
     }

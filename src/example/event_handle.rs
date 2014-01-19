@@ -25,6 +25,24 @@ fn event_handler(_: &mut Window, event: &event::Event) -> bool {
             println!("Do not try to press escape: the callback returns `false` (does not propagate events)!");
             false // override the default keyboard handler
         },
+        event::ButtonPressed(button, mods) => {
+            println!("You pressed the mouse button with code: {:?}", button);
+            println!("You pressed the mouse button with modifiers: {:?}", mods);
+            true // dont override the default mouse handler
+        },
+        event::ButtonReleased(button, mods) => {
+            println!("You released the mouse button with code: {:?}", button);
+            println!("You released the mouse button with modifiers: {:?}", mods);
+            true // dont override the default mouse handler
+        },
+        event::CursorPos(x, y) => {
+            println!("Cursor pos: ({} , {})", x, y);
+            true // dont override the default mouse handler
+        },
+        event::Scroll(xshift, yshift) => {
+            println!("Cursor pos: ({} , {})", xshift, yshift);
+            true // dont override the default mouse handler
+        },
         _ => true
     }
 }

@@ -11,6 +11,79 @@ impl glfw::ErrorCallback for ErrorContext {
 }
 
 //
+// Scroll Callback
+//
+pub struct ScrollCallback {
+    collector: RWArc<~[event::Event]>
+}
+
+impl ScrollCallback {
+    pub fn new(collector: RWArc<~[event::Event]>) -> ScrollCallback {
+        ScrollCallback {
+            collector: collector
+        }
+    }
+}
+
+impl glfw::ScrollCallback for ScrollCallback {
+    fn call(&self, _: &glfw::Window, x: f64, y: f64) {
+        self.collector.write(|c| c.push(event::Scroll(x as f32, y as f32)))
+    }
+}
+
+
+//
+// Cursor Pos Callback
+//
+pub struct CursorPosCallback {
+    collector: RWArc<~[event::Event]>
+}
+
+impl CursorPosCallback {
+    pub fn new(collector: RWArc<~[event::Event]>) -> CursorPosCallback {
+        CursorPosCallback {
+            collector: collector
+        }
+    }
+}
+
+impl glfw::CursorPosCallback for CursorPosCallback {
+    fn call(&self, _: &glfw::Window, x: f64, y: f64) {
+        self.collector.write(|c| c.push(event::CursorPos(x as f32, y as f32)))
+    }
+}
+
+//
+// Mouse Button Callback
+//
+pub struct MouseButtonCallback {
+    collector: RWArc<~[event::Event]>
+}
+
+impl MouseButtonCallback {
+    pub fn new(collector: RWArc<~[event::Event]>) -> MouseButtonCallback {
+        MouseButtonCallback {
+            collector: collector
+        }
+    }
+}
+
+impl glfw::MouseButtonCallback for MouseButtonCallback {
+    fn call(&self,
+            _:      &glfw::Window,
+            button: glfw::MouseButton,
+            action: glfw::Action,
+            mods:   glfw::Modifiers) {
+        if action == glfw::Press {
+            self.collector.write(|c| c.push(event::ButtonPressed(button, mods)))
+        }
+        else {
+            self.collector.write(|c| c.push(event::ButtonReleased(button, mods)))
+        }
+    }
+}
+
+//
 // Key callback
 //
 pub struct KeyCallback {
@@ -40,3 +113,25 @@ impl glfw::KeyCallback for KeyCallback {
         }
     }
 }
+
+//
+// Framebuffer callback
+//
+pub struct FramebufferSizeCallback {
+    collector: RWArc<~[event::Event]>
+}
+
+impl FramebufferSizeCallback {
+    pub fn new(collector: RWArc<~[event::Event]>) -> FramebufferSizeCallback {
+        FramebufferSizeCallback {
+            collector: collector
+        }
+    }
+}
+
+impl glfw::FramebufferSizeCallback for FramebufferSizeCallback {
+    fn call(&self, _: &glfw::Window, w: i32, h: i32) {
+        self.collector.write(|c| c.push(event::FramebufferSize(w as f32, h as f32)))
+    }
+}
+
