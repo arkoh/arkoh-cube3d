@@ -1,0 +1,4 @@
+*.so
+*.rlib
+bin/window
+bin/event_handle
