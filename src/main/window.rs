@@ -160,6 +160,16 @@ impl<'a> Window<'a> {
 
             self.window.swap_buffers();
         }
+
+        unsafe {
+            gl::DeleteProgram(shader_program);
+            gl::DeleteShader(fragment_shader);
+            gl::DeleteShader(vertex_shader);
+
+            gl::DeleteBuffers(1, &vbo);
+
+            gl::DeleteVertexArrays(1, &vao);
+        }
     }
 
     pub fn add_cube(&mut self) {
