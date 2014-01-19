@@ -144,13 +144,15 @@ impl<'a> Window<'a> {
         };
 
         while !self.window.should_close() {
+            glfw::poll_events();
+            callback(self);
+            self.poll_events(|_, _| true);
+
             gl::ActiveTexture(gl::TEXTURE0);
             gl::ClearColor(0.0,1.0,1.0,1.0);
             gl::Clear(gl::COLOR_BUFFER_BIT);
             gl::Clear(gl::DEPTH_BUFFER_BIT);
             
-            glfw::poll_events();
-            callback(self);
 
             for obj in self.objects.iter() {
                 obj.draw(color_location);
