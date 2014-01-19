@@ -8,4 +8,6 @@ extern mod extra;
 extern mod glfw;
 extern mod gl;
 
+pub mod callback;
+pub mod event;
 pub mod window;
