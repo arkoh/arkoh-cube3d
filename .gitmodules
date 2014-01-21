@@ -7,3 +7,6 @@
 [submodule "src/support/nalgebra"]
 	path = src/support/nalgebra
 	url = https://github.com/sebcrozet/nalgebra.git
+[submodule "src/support/arkoh-core"]
+	path = src/support/arkoh-core
+	url = https://github.com/arkoh/arkoh-core.git
