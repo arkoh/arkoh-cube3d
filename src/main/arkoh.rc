@@ -12,6 +12,10 @@ pub mod vertices;
 pub mod shader {
     pub mod shaders;
 }
+
+pub mod camera {
+    pub mod camera;
+}
 pub mod object;
 
 pub mod callback;
